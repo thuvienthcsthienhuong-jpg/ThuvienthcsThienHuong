@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thư Viện Sách Trực Tuyến - Trường THCS Thiên Hương</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+  :root {
+    --primary-color: #6a5acd;
+    --secondary-color: #9370db;
+    --accent-color: #ba55d3;
+    --light-color: #f0e6ff;
+    --dark-color: #483d8b;
+    --success-color: #4CAF50;
+    --warning-color: #FFC107;
+  }
+  
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    background-image: url('https://img.freepik.com/free-vector/hand-drawn-colorful-doodle-background_23-2149015287.jpg?w=1380');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .navbar {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 600;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  .hero-section {
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .book-card {
+    transition: all 0.4s;
+    margin-bottom: 1.5rem;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .book-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  }
+  
+  .book-img {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  
+  .book-card:hover .book-img {
+    transform: scale(1.1);
+  }
+  
+  .card-footer {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-radius: 30px 30px 0 0;
+  }
+  
+  .qr-container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .pdf-container {
+    height: 100%;
+  }
+  
+  #searchInput {
+    border-radius: 20px;
+    border: 2px solid var(--accent-color);
+    padding-left: 15px;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  }
+  
+  .category-badge {
+    background-color: var(--accent-color);
+    color: white;
+    margin-right: 5px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: 600;
+  }
+  
+  .category-card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+  
+  .category-icon {
+    color: white;
+    background-color: rgba(255,255,255,0.2);
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+  }
+  
+  section {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    bottom: -10px;
+    left: 25%;
+    border-radius: 10px;
+  }
+  
+  .btn-outline-secondary {
+    border-radius: 20px;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+  
+  .modal-header {
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    color: white;
+  }
+  
+  .about-card {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  /* Floating animation for elements */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  .float-animation {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .qr-image {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
+  /* New styles for personalization features */
+  .user-profile {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 5px;
+    margin-left: 10px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+  
+  .user-name {
+    color: var(--dark-color) !important;
+    margin: 0 10px;
+    font-weight: 600;
+  }
+  
+  .progress-bar {
+    height: 10px;
+    border-radius: 5px;
+  }
+  
+  .reading-progress {
+    height: 5px;
+    background-color: var(--accent-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0;
+  }
+  
+  .bookmark-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    color: var(--dark-color);
+  }
+  
+  .bookmark-btn:hover {
+    background: white;
+    transform: scale(1.1);
+  }
+  
+  .bookmark-btn.active {
+    color: var(--accent-color);
+  }
+  
+  .rating {
+    color: var(--warning-color);
+  }
+  
+  .badge-reading-challenge {
+    background: linear-gradient(45deg, #FF5722, #FF9800);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 10px;
+  }
+  
+  .user-dashboard {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .stat-item {
+    background: var(--light-color);
+    padding: 15px;
+    border-radius: 15px;
+    min-width: 120px;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    color: var(--dark-color);
+  }
+  
+  .recommendation-card {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .recommendation-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+  }
+  
+  .recommendation-body {
+    padding: 15px;
+  }
+  
+  .book-list-horizontal {
+    display: flex;
+    overflow-x: auto;
+    padding: 15px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .book-list-item {
+    min-width: 150px;
+    margin-right: 15px;
+    text-align: center;
+  }
+  
+  .book-list-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+  }
+  
+  .book-list-img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  
+  .reading-goal-progress {
+    height: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+  
+  .tab-content {
+    padding: 20px 0;
+  }
+  
+  .nav-pills .nav-link {
+    border-radius: 20px;
+    margin-right: 10px;
+    color: var(--dark-color);
+    font-weight: 600;
+  }
+  
+  .nav-pills .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .comment-section {
+    margin-top: 20px;
+  }
+  
+  .comment {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .reading-time {
+    color: #6c757d;
+    font-size: 14px;
+  }
+  
+  .note-card {
+    background: #fff8e1;
+    border-left: 4px solid var(--warning-color);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  
+  .achievement-badge {
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .badge-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    color: white;
+    font-size: 30px;
+  }
+  
+  .locked-badge {
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-book-reader me-2"></i>
+      Thư Viện THCS Thiên Hương
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Trang chủ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#categories">Danh mục</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#recommended">Đề xuất cho bạn</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#mybooks">Sách của tôi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#challenges">Thách thức đọc sách</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm kiếm sách..." onkeyup="searchBooks()">
+        <button class="btn btn-outline-light rounded-pill" type="submit">Tìm</button>
+      </form>
+      <!-- User Profile Button -->
+      <div class="user-profile dropdown">
+        <a class="dropdown-toggle d-flex align-items-center text-decoration-none" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://i.pravatar.cc/150?img=12" alt="User Avatar" class="user-avatar">
+          <span class="user-name d-none d-md-block">Minh Anh</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="#myprofile"><i class="fas fa-user me-2"></i>Hồ sơ của tôi</a></li>
+          <li><a class="dropdown-item" href="#mybooks"><i class="fas fa-book me-2"></i>Sách của tôi</a></li>
+          <li><a class="dropdown-item" href="#mynotes"><i class="fas fa-sticky-note me-2"></i>Ghi chú của tôi</a></li>
+          <li><a class="dropdown-item" href="#myachievements"><i class="fas fa-trophy me-2"></i>Thành tích</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#settings"><i class="fas fa-cog me-2"></i>Cài đặt</a></li>
+          <li><a class="dropdown-item" href="#logout"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+  <!-- User Dashboard -->
+  <section id="dashboard" class="user-dashboard">
+    <div class="row">
+      <div class="col-md-8">
+        <h3><i class="fas fa-tachometer-alt me-2"></i>Xin chào, Minh Anh!</h3>
+        <p>Chào mừng quay trở lại với thư viện trực tuyến của chúng tôi.</p>
+        
+        <!-- Reading Goal Progress -->
+        <div class="mt-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5>Mục tiêu đọc sách tháng 9: 10 cuốn</h5>
+            <span class="badge bg-primary rounded-pill">6/10 sách</span>
+          </div>
+          <div class="progress reading-goal-progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+          </div>
+          <p class="text-muted small">Còn 4 cuốn sách để đạt mục tiêu tháng này!</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="dashboard-stats">
+          <div class="stat-item">
+            <div class="stat-number">24</div>
+            <div class="stat-label">Sách đã đọc</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Ghi chú</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Huy hiệu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Currently Reading -->
+    <div class="mt-4">
+      <h5><i class="fas fa-book-open me-2"></i>Đang đọc</h5>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card book-card">
+            <img src="https://salt.tikicdn.com/ts/product/5e/ce/a2/ea55fab98e9c1c46c8f3a0fca55e0d1e.jpg" class="card-img-top book-img" alt="Dế Mèn Phiêu Lưu Ký">
+            <div class="progress reading-progress" style="width: 75%"></div>
+            <div class="card-body">
+              <h5 class="card-title">Dế Mèn Phiêu Lưu Ký</h5>
+              <p class="card-text text-muted">Tô Hoài</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-info">75% hoàn thành</span>
+                <a href="#" class="btn btn-sm btn-primary">Tiếp tục đọc</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card book-card">
+            <img src="https://salt.tikicdn.com/ts/product/b5/1d/0a/b5c4a3c2c1a0b9a6c4d55b2c7b6b2f5e.jpg" class="card-img-top book-img" alt="Từ Điển Bách Khoa Thiếu Nhi">
+            <div class="progress reading-progress" style="width: 30%"></div>
+            <div class="card-body">
+              <h5 class="card-title">Từ Điển Bách Khoa Thiếu Nhi</h5>
+              <p class="card-text text-muted">Nhiều tác giả</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-info">30% hoàn thành</span>
+                <a href="#" class="btn btn-sm btn-primary">Tiếp tục đọc</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personalized Recommendations -->
+  <section id="recommended">
+    <h2 class="text-center">Đề xuất cho bạn</h2>
+    <div class="recommendation-card">
+      <div class="recommendation-header">
+        <i class="fas fa-lightbulb me-2"></i> Dựa trên sở thích đọc của bạn
+      </div>
+      <div class="recommendation-body">
+        <div class="book-list-horizontal">
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/c5/5b/d1/e7e0794a6b8f5cbf8b2a6e5c3e5a1a2a.jpg" class="book-list-img" alt="Truyện Kiều">
+            <p class="mt-2 mb-0">Truyện Kiều</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/57/24/71/d7a6003d57c8a5eca30a36843a1a5939.jpg" class="book-list-img" alt="Tắt Đèn">
+            <p class="mt-2 mb-0">Tắt Đèn</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/7e/e1/d4/7a76f6892e638ec6e937d0da03a9e7f0.jpg" class="book-list-img" alt="Lão Hạc">
+            <p class="mt-2 mb-0">Lão Hạc</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/c8/25/37/c5e166d3b096fa0a900facce02b92eda.jpg" class="book-list-img" alt="Số Đỏ">
+            <p class="mt-2 mb-0">Số Đỏ</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/ee/59/e3/1e42d7014f00a5c4f7f143dae19aaa9d.jpg" class="book-list-img" alt="Vợ Nhặt">
+            <p class="mt-2 mb-0">Vợ Nhặt</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recommendation-card">
+      <div class="recommendation-header">
+        <i class="fas fa-graduation-cap me-2"></i> Hỗ trợ môn học của bạn
+      </div>
+      <div class="recommendation-body">
+        <div class="book-list-horizontal">
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/5e/18/24/2a6154ba08df6ce6161c13f4303fa19e.jpg" class="book-list-img" alt="Toán 6 - Tập 1">
+            <p class="mt-2 mb-0">Toán 6 - Tập 1</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/0b/04/4a/f5ec4b0a7a6a8beef3b69c11b6e5e01d.jpg" class="book-list-img" alt="Bài Tập Vật Lý 8">
+            <p class="mt-2 mb-0">Bài Tập Vật Lý 8</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/7d/3b/0a/eee7563a747f462b8bbfd9a1c2e43e4a.jpg" class="book-list-img" alt="Ngữ Văn 7">
+            <p class="mt-2 mb-0">Ngữ Văn 7</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+          <div class="book-list-item">
+            <img src="https://salt.tikicdn.com/ts/product/4d/a1/1d/f5ec4b0a7a6a8beef3b69c11b6e5e01d.jpg"
